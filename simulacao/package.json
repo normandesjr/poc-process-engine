@@ -1,0 +1,16 @@
+{
+  "name": "simulacao",
+  "version": "1.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "zip": "zip -r simulacao.zip *",
+    "upload": "aws s3 cp simulacao.zip s3://hibicode-lambda-bucket/v$npm_package_version/simulacao.zip --profile zup",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.0.3"
+  }
+}
