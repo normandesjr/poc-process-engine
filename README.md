@@ -1,3 +1,3 @@
 # PoC for Process Engine
 
-![Prototype Architecture](./media/prototype-architecture.png)
+![Prototype Flow](./media/prototype-flow.png)
