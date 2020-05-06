@@ -2,14 +2,14 @@ data "aws_s3_bucket" "bucket_lambda" {
   bucket = "hibicode-lambda-bucket"
 }
 
-variable "app_version" {
+variable "simulacao_version" {
 }
 
 resource "aws_lambda_function" "simulacao_function" {
     function_name   = "SimulacaoFunction"
 
     s3_bucket       = data.aws_s3_bucket.bucket_lambda.id
-    s3_key          = "v${var.app_version}/simulacao.zip"
+    s3_key          = "v${var.simulacao_version}/simulacao.zip"
 
     handler         = "main.handler"
     runtime         = "nodejs12.x"
