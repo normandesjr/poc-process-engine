@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+    <var name="personalInfo" class="com.hibicode.financial.model.PersonalInfo" />
+    <var name="valueInfo" class="com.hibicode.financial.model.ValueInfo" />
+    <var name="dateInfo" class="com.hibicode.financial.model.DateInfo" />
+    <var name="portionInfo" class="com.hibicode.financial.model.PortionInfo" />
+
+    <on-start>
+        <evaluate expression="financialHandler.init()" result="flowScope.financialModel" />
+    </on-start>
+
+    <view-state id="personal" view="flows/financial/personal" model="personalInfo">
+        <transition on="value" to="validatePersonal" />
+        <on-exit>
+            <evaluate expression="financialHandler.addPersonalInfo(flowScope.financialModel, personalInfo)"/>
+        </on-exit>
+    </view-state>
+    <action-state id="validatePersonal">
+        <evaluate expression="financialHandler.validatePersonalInfo(personalInfo, messageContext)" />
+        <transition on="success" to="value" />
+        <transition on="failure" to="personal" />
+    </action-state>
+
+    <view-state id="value" view="flows/financial/value" model="valueInfo">
+        <transition on="personal" to="personal" />
+        <transition on="date" to="date" />
+        <on-exit>
+            <evaluate expression="financialHandler.addValueInfo(flowScope.financialModel, valueInfo)"/>
+        </on-exit>
+    </view-state>
+
+    <view-state id="date" view="flows/financial/date" model="dateInfo">
+        <transition on="value" to="value" />
+        <transition on="portion" to="portion" />
+        <on-exit>
+            <evaluate expression="financialHandler.addDateInfo(flowScope.financialModel, dateInfo)"/>
+        </on-exit>
+    </view-state>
+
+    <view-state id="portion" view="flows/financial/portion" model="portionInfo">
+        <transition on="date" to="date" />
+        <transition on="summary" to="summary" />
+        <on-exit>
+            <evaluate expression="financialHandler.addPortionInfo(flowScope.financialModel, portionInfo)"/>
+        </on-exit>
+    </view-state>
+
+    <view-state id="summary" view="flows/financial/summary" model="flowScope.financialModel">
+        <transition on="portion" to="portion" />
+        <transition on="hire" to="hire" />
+    </view-state>
+
+    <action-state id="hire">
+        <evaluate expression="financialHandler.save(flowScope.financialModel, messageContext)" />
+        <transition on="success" to="success" />
+    </action-state>
+
+    <end-state id="success" view="flows/financial/success" />
+    <end-state id="home" view="externalRedirect:contextRelative:/" />
+
+    <global-transitions>
+        <transition on="home" to="home" validate="false" />
+    </global-transitions>
+
+</flow>

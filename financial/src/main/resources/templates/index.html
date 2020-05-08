@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head :: head"></head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 th:text="Financial"></h1>
+                    <hr />
+                    <a th:href="@{/financial}">Pegar empréstimo</a>
+                </div>
+            </div>
+        </div>
+
+        <script th:replace="fragments/footer :: footer"></script>
+    </body>
+
+</html>

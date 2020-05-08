@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head :: head"></head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Quanto você precisa emprestado?</h1>
+                    <hr />
+
+                    <form method="post" th:object="${valueInfo}" >
+                        <div class="col-sm-10 form-group row">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="value100000" th:field="*{value}" th:value="${'10000'}" checked>
+                                <label class="form-check-label" for="value100000">
+                                    R$ 10.000,00
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-10 form-group row">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="value8000" th:field="*{value}" th:value="${'8000'}">
+                                <label class="form-check-label" for="value8000">
+                                    R$ 8.000,00
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-10 form-group row">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="value5000" th:field="*{value}" th:value="${'5000'}">
+                                <label class="form-check-label" for="value5000">
+                                    R$ 5.000,00
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-10 form-group row">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="value2000" th:field="*{value}" th:value="${'2000'}">
+                                <label class="form-check-label" for="value2000">
+                                    R$ 2.000,00
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-10 form-group row">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="value1000" th:field="*{value}" th:value="${'1000'}">
+                                <label class="form-check-label" for="value1000">
+                                    R$ 1.000,00
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-10">
+                                <button type="submit" class="btn btn-secondary" name="_eventId_personal">&laquo; Anterior (Pessoal)</button>
+                                <button type="submit" class="btn btn-primary" name="_eventId_date">Próximo (Data Pagamento) &raquo;</button>
+                            </div>
+                            <div class="col-sm-10">
+                                <a th:href="@{'~' + ${flowExecutionUrl} + '&_eventId_home'}" class="btn btn-link">Cancelar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script th:replace="fragments/footer :: footer"></script>
+    </body>
+
+</html>
