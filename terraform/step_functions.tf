@@ -7,9 +7,27 @@ resource "aws_sfn_state_machine" "sfn_state_machine" {
   "Comment": "Simulacao",
   "StartAt": "Simulacao",
   "States": {
-    "Simulacao": {
-      "Type": "Task",
-      "Resource": "${aws_lambda_function.simulacao_function.arn}",
+    "Is Single Stallment": {
+        "Type" : "Choice",
+        "Choices": [ 
+          {
+            "Variable": "$.quantity",
+            "NumericEquals": 1,
+            "Next": "Disbursment"
+          },
+          {
+            "Variable": "$.quantity",
+            "NumericGreaterThan": 1,
+            "Next": "Manager Manual Approve"
+          }
+      ]
+    },
+    "Disbursment": {
+      "Type": "Pass",
+      "End": true
+    },
+    "Manager Manual Approve": {
+      "Type": "Pass",
       "End": true
     }
   }
