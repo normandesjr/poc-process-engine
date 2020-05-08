@@ -23,11 +23,9 @@ resource "aws_sfn_state_machine" "sfn_state_machine" {
       ]
     },
      "Risk Analysis": {
-      "Type": "Pass",
-      "Result": {
-        "approved": true
-      },
-      "Next": "Is Risk Available"
+      "Type": "Task",
+      "Resource": "${aws_lambda_function.avalia_risco_function.arn}",
+      "Next": "Is Risk Approved"
     },
     "Is Risk Approved": {
         "Type" : "Choice",
@@ -49,8 +47,8 @@ resource "aws_sfn_state_machine" "sfn_state_machine" {
       "End": true
     },
     "Credit Denied": {
-      "Type": "Fail",
-      "Cause": "Credit Denied"
+      "Type": "Pass",
+      "End": true
     }
   }
 }
