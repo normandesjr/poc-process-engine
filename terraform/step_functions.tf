@@ -4,8 +4,8 @@ resource "aws_sfn_state_machine" "sfn_state_machine" {
 
   definition = <<EOF
 {
-  "Comment": "Simulacao",
-  "StartAt": "Simulacao",
+  "Comment": "Financial",
+  "StartAt": "Is Single Stallment",
   "States": {
     "Is Single Stallment": {
         "Type" : "Choice",
@@ -18,7 +18,29 @@ resource "aws_sfn_state_machine" "sfn_state_machine" {
           {
             "Variable": "$.quantity",
             "NumericGreaterThan": 1,
-            "Next": "Manager Manual Approve"
+            "Next": "Risk Analysis"
+          }
+      ]
+    },
+     "Risk Analysis": {
+      "Type": "Pass",
+      "Result": {
+        "approved": true
+      },
+      "Next": "Is Risk Available"
+    },
+    "Is Risk Approved": {
+        "Type" : "Choice",
+        "Choices": [ 
+          {
+            "Variable": "$.approved",
+            "BooleanEquals": true,
+            "Next": "Disbursment"
+          },
+          {
+            "Variable": "$.approved",
+            "BooleanEquals": false,
+            "Next": "Credit Denied"
           }
       ]
     },
@@ -26,9 +48,9 @@ resource "aws_sfn_state_machine" "sfn_state_machine" {
       "Type": "Pass",
       "End": true
     },
-    "Manager Manual Approve": {
-      "Type": "Pass",
-      "End": true
+    "Credit Denied": {
+      "Type": "Fail",
+      "Cause": "Credit Denied"
     }
   }
 }
