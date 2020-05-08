@@ -21,6 +21,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-webflow.version>2.5.1.RELEASE</spring-webflow.version>
+		<aws-java-sdk.version>1.11.777</aws-java-sdk.version>
 	</properties>
 
 	<dependencies>
@@ -37,6 +38,24 @@
 			<groupId>org.springframework.webflow</groupId>
 			<artifactId>spring-webflow</artifactId>
 			<version>${spring-webflow.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-core</artifactId>
+			<version>${aws-java-sdk.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-stepfunctions</artifactId>
+			<version>${aws-java-sdk.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20190722</version>
 		</dependency>
 
 		<dependency>

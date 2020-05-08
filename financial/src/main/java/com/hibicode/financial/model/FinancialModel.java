@@ -1,5 +1,7 @@
 package com.hibicode.financial.model;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 public class FinancialModel implements Serializable {
@@ -39,5 +41,15 @@ public class FinancialModel implements Serializable {
 
     public void setPortionInfo(PortionInfo portionInfo) {
         this.portionInfo = portionInfo;
+    }
+
+    public String getJsonString() {
+        JSONObject sfnInput = new JSONObject();
+        sfnInput.put("name", getPersonalInfo().getName());
+        sfnInput.put("cpf", getPersonalInfo().getCpf());
+        sfnInput.put("value", Integer.valueOf(getValueInfo().getValue()));
+        sfnInput.put("date", getDateInfo().getDate());
+        sfnInput.put("quantity", Integer.valueOf(getPortionInfo().getQuantity()));
+        return sfnInput.toString();
     }
 }
